@@ -1,0 +1,1 @@
+export {default as FullPageImg} from './FullPageImg'
