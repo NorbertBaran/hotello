@@ -6,10 +6,9 @@ import WelcomeLabel from "../components/WelcomeLabel";
 
 const WelcomePage = () => {
     const welcome = api.welcome()
-    const slogan = api.slogan().slogan
     return(
         <FullPageImg img={welcome.img}>
-            <WelcomeLabel btn={{label: 'Book now', nav: '/book'}}/>
+            <WelcomeLabel btn={{label: 'Book now', nav: '/login'}}/>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -20,7 +19,7 @@ const WelcomePage = () => {
                 padding: '0 150px',
                 textAlign: 'center'
             }}>
-                <Typography variant='h2' sx={{ overflow: 'hidden', maxHeight: '8.5em'}}>{slogan}</Typography>
+                <Typography variant='h2' sx={{ overflow: 'hidden', maxHeight: '8.5em'}}>{welcome.slogan}</Typography>
                 <NavLink to='/gallery'>
                     <Button variant='contained' size='large' sx={{width: '250px'}}>Gallery</Button>
                 </NavLink>

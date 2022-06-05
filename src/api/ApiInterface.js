@@ -4,4 +4,6 @@ export default class ApiInterface {
     welcome(){throw notImplementedError('welcome()')}
     slogan(){throw notImplementedError('slogan()')}
     gallery(){throw notImplementedError('gallery()')}
+    signs(){throw notImplementedError('sign()')}
+    signin(){throw notImplementedError('signin()')}
 }

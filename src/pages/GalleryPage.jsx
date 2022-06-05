@@ -8,6 +8,7 @@ import {ArrowBack, ArrowForward} from "@mui/icons-material";
 const GalleryPage = () => {
     const gallery = api.gallery()
     const [active, setActive] = useState(0)
+    const [thumbnailsOffset, setThumbnailsOffset] = useState(0)
     return(
         <FullPageImg img={gallery.images[active]}>
             <WelcomeLabel btn={{label: 'Home', nav: '/'}}/>
@@ -15,36 +16,48 @@ const GalleryPage = () => {
                 position: 'fixed',
                 bottom: 0,
                 left: 0,
-                zIndex: 2
+                zIndex: 2,
+                padding: '5px'
             }}>
-                <Button color='secondary' size='small' sx={{width: '65px', height: '120px'}}>
+                <Button color='secondary' size='small' sx={{width: '65px', height: '110px'}} onClick={() => thumbnailsOffset >= 190 ? setThumbnailsOffset(thumbnailsOffset-190) : setThumbnailsOffset(0)}>
                     <ArrowBack/>
                 </Button>
             </Box>
             <Box sx={{
                 position: 'fixed',
                 bottom: 0,
-                width: '100vw',
-                /*left: '65px',
-                width: 'calc(100vw - 130px)',
-                overflow: 'hidden',*/
+                // width: '100vw',
+                left: '75px',
+                width: 'calc(100vw - 150px)',
+                overflow: 'hidden',
                 height: '120px',
                 display: 'flex',
-                cursor: 'pointer',
-                zIndex: 1
+                zIndex: 1,
+                boxSizing: 'border-box',
+                padding: '5px 0',
             }}>
-                {gallery.images.map((image, index) =>
-                    <img src={image} width='180px' style={index === active ? {boxSizing: 'border-box', borderBottom: '4px solid #1F345F', objectFit: 'cover'} : {objectFit: 'cover', margin: '5px'}} onClick={()=>setActive(index)}/>
-                )}
-
+                <Box sx={{
+                    display: 'flex',
+                    position: 'relative',
+                    left: `${-thumbnailsOffset}px`
+                }}>
+                    {gallery.images.map((image, index) =>
+                        <img src={image} style={index === active ? {width: '190px', objectFit: 'cover', margin: 0} : {width: '180px', objectFit: 'cover', margin: '5px', cursor: 'pointer'}} onClick={()=>setActive(index)}/>
+                    )}
+                </Box>
             </Box>
             <Box sx={{
                 position: 'fixed',
                 bottom: 0,
                 right: 0,
-                zIndex: 2
+                zIndex: 2,
+                boxSizing: 'border-box',
+                padding: '5px'
             }}>
-                <Button color='secondary' size='small' sx={{width: '65px', height: '120px'}}>
+                <Button color='secondary' size='small' sx={{width: '65px', height: '110px'}} onClick={() => {
+                    if(190 * gallery.images.length > window.innerWidth - 150)
+                        thumbnailsOffset + (window.innerWidth - 150) <= 190 * (gallery.images.length - 1) ? setThumbnailsOffset(thumbnailsOffset+190) : setThumbnailsOffset(190 * gallery.images.length  - (window.innerWidth - 150))
+                }}>
                     <ArrowForward/>
                 </Button>
             </Box>

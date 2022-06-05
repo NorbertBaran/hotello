@@ -20,6 +20,7 @@ export default class ApiMock extends ApiInterface{
             location: 'Kraków',
             company: 'Hotello',
             phone: '123 456 789',
+            slogan: 'Lorem imsum dolor sit ament'
         }
     }
     slogan() {
@@ -44,5 +45,14 @@ export default class ApiMock extends ApiInterface{
                 img11
             ]
         }
+    }
+    signs() {
+        return {
+            company: 'Hotello',
+            img: welcome
+        }
+    }
+    signin(data) {
+        return data.username === 'admin' && data.password === 'admin' ? {token: '123'} : {token: null}
     }
 }

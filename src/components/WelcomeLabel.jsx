@@ -27,7 +27,7 @@ const WelcomeLabel = ({btn}) => {
                     {welcome.phone}
                 </Typography>
                 <NavLink to={btn.nav}>
-                    <Button variant='outlined' color='secondary' size='small'>{btn.label}</Button>
+                    <Button variant='outlined' color='secondary' size='small' sx={{width: '95px'}}>{btn.label}</Button>
                 </NavLink>
             </Box>
             <Typography variant='body2' sx={{display: {md: 'none'}, width: {md: '250px'}}}>
