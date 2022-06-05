@@ -6,16 +6,19 @@ import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {Error} from "@mui/icons-material";
 
-const AuthTemplate = ({subtitle, fields, submit, footer, error}) => {
+const AuthTemplate = ({subtitle, fields, submit, mainError, footer}) => {
     const signs = api.signs()
     const { handleSubmit, register, formState: { errors }} = useForm()
     const [signinError, setSigninError] = useState('')
 
     const onSubmit = data => {
         const token = api.signin(data).token
-        setSigninError('')
-        if(token === null)
-            setSigninError('Authentication failed')
+        mainError.setter('')
+        fields.forEach((field) => {
+            if(errors[field.register])
+                mainError.setter('Authentication failed')
+        })
+        submit.callback(data)
     }
 
     return(
@@ -34,15 +37,15 @@ const AuthTemplate = ({subtitle, fields, submit, footer, error}) => {
                                     variant="outlined"
                                     sx={{width: {sm: '300px'}}}
                                     {... register(field.register, field.validator)}
-                                    error={errors[field.register] || field.valid !== ''}
-                                    helperText={errors[field.register] ? errors[field.register].message : field.valid}
+                                    error={errors[field.register] || mainError.label !== ''}
+                                    helperText={errors[field.register] ? errors[field.register].message : ''}
                                 />
                             </Box>
                         )}
                         <Box sx={{display: 'flex', gap: '5px', height: '25px', marginBottom: '15px'}}>
-                            {error !== '' ? <Error fontSize='small' color='error'/> : ' '}
+                            {mainError.label !== '' ? <Error fontSize='small' color='error'/> : ' '}
                             <Typography variant='subtitle2' color='error' >
-                                {error}
+                                {mainError.label}
                             </Typography>
                         </Box>
                         <Button type='submit' variant="contained" sx={{marginBottom: '8vh', width: '150px'}}>{submit.label}</Button>
