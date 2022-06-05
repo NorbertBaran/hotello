@@ -2,8 +2,9 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {GalleryPage, WelcomePage} from "./pages";
 import {createTheme, ThemeProvider} from "@mui/material";
 import LoginPage from "./pages/LoginPage";
-import AnonymousBookPage from "./pages/AnonymousBookPage";
+import BookPage from "./pages/BookPage";
 import SignupPage from "./pages/SignupPage";
+import AdminLoginPage from "./pages/AdminLoginPage";
 
 const App = () => {
     return(
@@ -14,7 +15,8 @@ const App = () => {
                     <Route path='gallery' element={<GalleryPage/>}/>
                     <Route path='login' element={<LoginPage/>}/>
                     <Route path='signup' element={<SignupPage/>}/>
-                    <Route path='anonymous-book' element={<AnonymousBookPage/>}/>
+                    <Route path='book' element={<BookPage/>}/>
+                    <Route path='admin' element={<AdminLoginPage/>}/>
                 </Routes>
             </Router>
         </ThemeProvider>
