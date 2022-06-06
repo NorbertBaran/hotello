@@ -3,11 +3,7 @@ import {useState} from "react";
 import api from "../api";
 
 const AdminLoginPage = () => {
-
-
-    const [usernameError, setUsernameError] = useState('')
-    const [passwordError, setPasswordError] = useState('')
-    const [mainErrorLabel, setMainErrorLabel] = useState('')
+    /*const [mainErrorLabel, setMainErrorLabel] = useState('')
 
     const fields = [{
         label: "Username",
@@ -28,8 +24,12 @@ const AdminLoginPage = () => {
     const submit = {
         label: "Sign in",
         callback: (data) => {
-            if(api.signin(data).token === null)
+            const token = api.signin(data).token
+            if(token === null)
                 setMainErrorLabel('Authentication failed')
+            else
+                //TODO: Add token to session
+                console.log(token)
         }
     }
     const footer = [{
@@ -38,7 +38,8 @@ const AdminLoginPage = () => {
         postlabel: ' panel.',
         path: "/login"
     }]
-    return <AuthTemplate subtitle='Admin' fields={fields} mainError={mainError} submit={submit} footer={footer}/>
+    return <AuthTemplate subtitle='Admin' fields={fields} mainError={mainError} submit={submit} footer={footer}/>*/
+    return <>Admin login page</>
 }
 
 export default AdminLoginPage

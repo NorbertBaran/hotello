@@ -1,56 +1,84 @@
-import api from "../api";
-import {Box, Button, Card, TextField, Typography} from "@mui/material";
-import {FullPageImg} from "../components";
-import {NavLink} from "react-router-dom";
-import {useForm} from "react-hook-form";
+import AuthTemplate from "../components/AuthTemplate";
 import {useState} from "react";
-import {Error} from "@mui/icons-material";
+import api from "../api";
+import {useForm} from "react-hook-form";
 
-const LoginPage = () => {
-    const signs = api.signs()
-    const { handleSubmit, register} = useForm()
-    const [signinError, setSigninError] = useState('')
+const AdminLoginPage = () => {
+    const [token, setToken] = useState(null)
+    const form = useForm()
 
-    const onSubmit = data => {
-        const token = api.signin(data).token
-        setSigninError('')
-        if(token === null)
-            setSigninError('Authentication failed')
-    }
+    const fields = [{
+        label: "Email",
+        register: "email",
+        validator: {},
+    },{
+        label: "Password",
+        register: "password",
+        type: "password",
+        validator: {},
+    }]
 
-    return(
-        <FullPageImg img={signs.img} color='black'>
-            <Box sx={{display: 'flex', width: '100vw', height: '90vh', justifyContent: 'center', alignItems: 'center'}}>
-                <Card sx={{padding: {xs: '60px 35px', sm: '75px 90px'}, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <div style={{fontSize: '36px', fontFamily: 'Cinzel', marginBottom: '8vh'}}>{signs.company}</div>
-                    <form onSubmit={handleSubmit(onSubmit)} style={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center'}}>
-                        <TextField size='small' label="Username" variant="outlined" sx={{width: {sm: '300px'}}} {...register('username')}/>
-                        <TextField type='password' size='small' label="Password" variant="outlined" sx={{width: {sm: '300px'}}} {...register('password')}/>
-                        <Box sx={{display: 'flex', gap: '5px', height: '25px', paddingTop: '5px'}}>
-                            {signinError !== '' ? <Error fontSize='small' color='error'/> : ' '}
-                            <Typography variant='subtitle2' color='error' >
-                                {signinError}
-                            </Typography>
-                        </Box>
-                        <Button type='submit' variant="contained" sx={{marginBottom: '8vh', width: '150px'}}>Sign in</Button>
-                    </form>
-                    <Typography variant='subtitle1'>
-                        <span>Don't you have account yet? </span>
-                        <NavLink to='/signup' style={{textDecoration: 'none', color: '#1F345F'}}>Sign up</NavLink>
-                    </Typography>
-                    <Typography variant='subtitle1'>
-                        <NavLink to='/anonymous-book' style={{textDecoration: 'none', color: '#1F345F'}}>
-                            Booking
-                        </NavLink>
-                        <span> without account</span>
-                    </Typography>
-                    <Typography variant='subtitle1'>
-                        <NavLink to='/' style={{textDecoration: 'none', color: '#1F345F'}}>Home</NavLink>
-                    </Typography>
-                </Card>
-            </Box>
-        </FullPageImg>
-    )
+    const [submit, setSubmit] = useState({
+        _title: "Sign in",
+        email: {
+            state: false,
+            validators: [{
+                state: false,
+                callback: (data) => {
+                    let newSubmit = submit
+                    if(true){
+                        newSubmit.email.validators[0].state = true
+                        newSubmit.email.state = true
+                    }
+                    setSubmit(submit)
+                },
+                message: "Test1"
+            }]
+        },
+        password: {
+            state: true,
+            validators: []
+        },
+        _other: {
+            state: true,
+            validators: [{
+                state: true,
+                callback: (data) => {
+                    let newSubmit = submit
+                    console.log(data)
+                    const result = api.signin(data).token
+                    setToken(result)
+                    console.log(result)
+                    console.log(token)
+                    const state = result !== null;
+                    newSubmit.email.state = state
+                    newSubmit.password.state = state
+                    newSubmit._other.state = state
+                    newSubmit._other.validators[0].state = state
+                    setSubmit(newSubmit)
+                },
+                message: "Authentication failed"
+            }]
+        }
+    })
+
+    const footer = [{
+        prelabel: "Don't you have account yet? ",
+        label: "Sign up",
+        postlabel: "",
+        path: "/signup"
+    },{
+        prelabel: "",
+        label: "Booking",
+        postlabel: ' without account',
+        path: "/book"
+    },{
+        prelabel: "",
+        label: "Admin",
+        postlabel: ' panel.',
+        path: "/admin"
+    }]
+    return <AuthTemplate form={form} subtitle='Sign In' fields={fields} submit={submit} footer={footer}/>
 }
 
-export default LoginPage
+export default AdminLoginPage

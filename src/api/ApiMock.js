@@ -53,6 +53,6 @@ export default class ApiMock extends ApiInterface{
         }
     }
     signin(data) {
-        return data.username === 'admin' && data.password === 'admin' ? {token: '123'} : {token: null}
+        return data.email === 'admin@admin.com' && data.password === 'admin' ? {token: '123'} : {token: null}
     }
 }
