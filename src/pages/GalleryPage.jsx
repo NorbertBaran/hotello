@@ -42,7 +42,7 @@ const GalleryPage = () => {
                     left: `${-thumbnailsOffset}px`
                 }}>
                     {gallery.images.map((image, index) =>
-                        <img src={image} style={index === active ? {width: '190px', objectFit: 'cover', margin: 0} : {width: '180px', objectFit: 'cover', margin: '5px', cursor: 'pointer'}} onClick={()=>setActive(index)}/>
+                        <img key={index} src={image} style={index === active ? {width: '190px', objectFit: 'cover', margin: 0} : {width: '180px', objectFit: 'cover', margin: '5px', cursor: 'pointer'}} onClick={()=>setActive(index)}/>
                     )}
                 </Box>
             </Box>
