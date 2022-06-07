@@ -4,14 +4,18 @@ import {useState} from "react";
 import WelcomeLabel from "../components/WelcomeLabel";
 import {Box, Button} from "@mui/material";
 import {ArrowBack, ArrowForward} from "@mui/icons-material";
+import {paths} from "./index";
+import {useNavigate} from "react-router-dom";
 
 const GalleryPage = () => {
     const gallery = api.gallery()
     const [active, setActive] = useState(0)
     const [thumbnailsOffset, setThumbnailsOffset] = useState(0)
+    const navigate = useNavigate()
+
     return(
         <FullPageImg img={gallery.images[active]}>
-            <WelcomeLabel btn={{label: 'Home', nav: '/'}}/>
+            <WelcomeLabel btn={{label: 'Home', onClick: () => navigate(paths.welcome)}}/>
             <Box sx={{
                 position: 'fixed',
                 bottom: 0,

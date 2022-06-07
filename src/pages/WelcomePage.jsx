@@ -1,15 +1,17 @@
 import api from '../api'
 import {Box, Button, Typography} from "@mui/material";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {FullPageImg} from "../components";
 import WelcomeLabel from "../components/WelcomeLabel";
 import {paths} from "./index";
 
 const WelcomePage = () => {
     const welcome = api.welcome()
+    const navigate = useNavigate()
+
     return(
         <FullPageImg img={welcome.img}>
-            <WelcomeLabel btn={{label: 'Book now', nav: paths.sign_in}}/>
+            <WelcomeLabel btn={{label: 'Book now', onClick: () => navigate(paths.sign_in)}}/>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
