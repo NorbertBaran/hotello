@@ -2,21 +2,12 @@ import AuthTemplate from "../components/AuthTemplate";
 import {useState} from "react";
 import api from "../api";
 import {useForm} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
 
 const SignupPage = () => {
-    /*const [submitErrors, setSubmitErrors] = useState({
-        first_name: [],
-        last_name: [],
-        email: [],
-        password: [],
-        password_repeat: [],
-        other: [{
-            state: false,
-            validate: "",
-            message: "Authentication failed"
-        }]
-    })
     const form = useForm()
+    const navigate = useNavigate()
+    const [created, setCreated] = useState(null)
 
     const fields = [{
         label: "First name",
@@ -59,31 +50,64 @@ const SignupPage = () => {
             }
         }
     }]
-    const mainError = {
-        label: submitErrors.other[0].message,
-        setter: (value) => setSubmitErrors({
-            first_name: submitErrors.first_name,
-            last_name: submitErrors.last_name,
-            email: submitErrors.email,
-            password: submitErrors.password,
-            password_repeat: submitErrors.password_repeat,
-            other: [{
-                value: value,
-                message: "Authentication failed"
+
+    const [submit, setSubmit] = useState({
+        _title: "Sign up",
+        first_name: {
+            state: true,
+            validators: []
+        },
+        last_name: {
+            state: true,
+            validators: []
+        },
+        email: {
+            state: true,
+            validators: [{
+                state: true,
+                validate: (data) => {
+                    let newSubmit = submit
+                    const exist = api.email(data.email).exist
+                    const state = !exist
+                    newSubmit.email.state = state
+                    newSubmit.email.validators[0] = state
+                    setSubmit(newSubmit)
+                },
+                message: "User exists"
             }]
-        })
-    }
-    const submit = {
-        label: "Sign up",
-        callback: (data) => {
-            const token = api.signin(data).token
-            if(token === null)
-                mainError.setter(true)
-            else
-                //TODO: Add token to session
-                console.log(token)
+        },
+        password: {
+            state: true,
+            validators: []
+        },
+        password_repeat: {
+            state: true,
+            validators: []
+        },
+        _other: {
+            state: true,
+            validators: [{
+                state: true,
+                validate: (data) => {
+                    let newSubmit = submit
+                    const _created = created !== null
+                    console.log(_created)
+                    newSubmit._other.state = _created
+                    newSubmit._other.validators[0] = _created
+                    setSubmit(newSubmit)
+                },
+                message: "Server error. Signup later."
+            }]
+        },
+        _payload: null,
+        _callback: (data) => {
+            const created = api.signup(data)
+            setCreated(created)
+            if(created)
+                navigate('/login')
         }
-    }
+    })
+
     const footer = [{
         prelabel: "Do you have account? ",
         label: "Sign in",
@@ -95,8 +119,7 @@ const SignupPage = () => {
         postlabel: ' without account',
         path: "/book"
     }]
-    return <AuthTemplate form={form} subtitle='Sign Up' fields={fields} mainError={mainError} submit={submit} footer={footer}/>*/
-    return <>Signup page</>
+    return <AuthTemplate form={form} subtitle='Sign Up' fields={fields} submit={submit} footer={footer}/>
 }
 
 export default SignupPage

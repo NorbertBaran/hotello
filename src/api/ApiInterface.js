@@ -6,4 +6,6 @@ export default class ApiInterface {
     gallery(){throw notImplementedError('gallery()')}
     signs(){throw notImplementedError('sign()')}
     signin(){throw notImplementedError('signin()')}
+    email(){throw notImplementedError('email()')}
+    signup(){throw notImplementedError('signup()')}
 }

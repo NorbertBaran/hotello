@@ -2,9 +2,11 @@ import AuthTemplate from "../components/AuthTemplate";
 import {useState} from "react";
 import api from "../api";
 import {useForm} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
 
 const AdminLoginPage = () => {
     const form = useForm()
+    const navigate = useNavigate()
 
     const fields = [{
         label: "Email",
@@ -48,7 +50,7 @@ const AdminLoginPage = () => {
         _payload: null,
         _callback: (data) => {
             localStorage.setItem('jwt', submit._payload.token)
-            console.log(localStorage.getItem('jwt'))
+            navigate('/dashboard')
         }
     })
 
