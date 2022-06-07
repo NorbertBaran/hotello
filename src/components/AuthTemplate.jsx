@@ -7,7 +7,6 @@ import {paths} from "../pages";
 
 const AuthTemplate = ({form, subtitle, fields, submit_btn_text, fieldSubmitErrors, otherSubmitErrors, handleSubmit, footer}) => {
     const signs = api.signs()
-
     return(
         <FullPageImg img={signs.img} color='black'>
             <Box sx={{display: 'flex', width: '100vw', height: '100vh', justifyContent: 'center', alignItems: 'center'}}>
@@ -30,6 +29,7 @@ const AuthTemplate = ({form, subtitle, fields, submit_btn_text, fieldSubmitError
                                         : fieldSubmitErrors[field.register].value
                                             ? fieldSubmitErrors[field.register].message
                                             : ''}
+                                    inputProps={field.inputProps !== undefined ? field.inputProps : {}}
                                 />
                             </Box>
                         )}

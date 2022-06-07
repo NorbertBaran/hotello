@@ -40,7 +40,11 @@ const DashboardPage = () => {
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={() => {
+                    localStorage.removeItem('jwt')
+                    navigate(paths.sign_in)
+                }
+                }>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

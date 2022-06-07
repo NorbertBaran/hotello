@@ -32,7 +32,7 @@ const SignInPage = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const handleSubmit = (data) => {
-        const jwt = api.signin(data)
+        const jwt = api.sign_in(data)
         if(jwt.token === null || (location.pathname === paths.sign_in_admin && jwt.role !== 'admin')){
             let newFieldSubmitErrors = fieldSubmitErrors
             newFieldSubmitErrors.email.value = true
