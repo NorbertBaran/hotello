@@ -4,7 +4,6 @@ import api from "../api";
 import {useForm} from "react-hook-form";
 
 const AdminLoginPage = () => {
-    const [token, setToken] = useState(null)
     const form = useForm()
 
     const fields = [{
@@ -21,19 +20,8 @@ const AdminLoginPage = () => {
     const [submit, setSubmit] = useState({
         _title: "Sign in",
         email: {
-            state: false,
-            validators: [{
-                state: false,
-                callback: (data) => {
-                    let newSubmit = submit
-                    if(true){
-                        newSubmit.email.validators[0].state = true
-                        newSubmit.email.state = true
-                    }
-                    setSubmit(submit)
-                },
-                message: "Test1"
-            }]
+            state: true,
+            validators: []
         },
         password: {
             state: true,
@@ -43,22 +31,24 @@ const AdminLoginPage = () => {
             state: true,
             validators: [{
                 state: true,
-                callback: (data) => {
+                validate: (data) => {
                     let newSubmit = submit
-                    console.log(data)
-                    const result = api.signin(data).token
-                    setToken(result)
-                    console.log(result)
-                    console.log(token)
-                    const state = result !== null;
+                    const token = api.signin(data).token
+                    const state = token !== null
                     newSubmit.email.state = state
                     newSubmit.password.state = state
-                    newSubmit._other.state = state
                     newSubmit._other.validators[0].state = state
+                    newSubmit._other.state = state
+                    newSubmit._payload = {token: token}
                     setSubmit(newSubmit)
                 },
                 message: "Authentication failed"
             }]
+        },
+        _payload: null,
+        _callback: (data) => {
+            localStorage.setItem('jwt', submit._payload.token)
+            console.log(localStorage.getItem('jwt'))
         }
     })
 

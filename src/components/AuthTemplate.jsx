@@ -8,14 +8,26 @@ const AuthTemplate = ({form, subtitle, fields, submit, footer}) => {
     const signs = api.signs()
 
     const onSubmit = data => {
+        //On submit validations maker
         fields.forEach(field => {
             submit[field.register].validators.forEach(validator => {
-                validator.callback(data)
+                validator.validate(data)
             })
         })
         submit._other.validators.forEach(validator => {
-            validator.callback(data)
+            validator.validate(data)
         })
+        //On submit validations checker
+        let correct = true
+        fields.forEach(field => {
+            if(!submit[field.register].state)
+                correct = false
+        })
+        if(!submit._other.state)
+            correct = false
+        //Submit
+        if(correct)
+            submit._callback(data)
     }
 
     const getSubmitMessage = (field_name) => {
@@ -52,11 +64,15 @@ const AuthTemplate = ({form, subtitle, fields, submit, footer}) => {
                                 />
                             </Box>
                         )}
-                        <Box sx={{display: 'flex', gap: '5px', height: '25px', marginBottom: '15px'}}>
-                            {submit._other.state === false ? <Error fontSize='small' color='error'/> : ' '}
-                            <Typography variant='subtitle2' color='error' >
-                                {submit._other.state === false ? submit._other.validators[0].message : ' '}
-                            </Typography>
+                        <Box sx={{marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                            {submit._other.validators.map((validator, index) =>
+                                <Box key={index} sx={{display: 'flex', gap: '5px', height: '25px'}}>
+                                    {validator.state === false ? <Error fontSize='small' color='error'/> : ' '}
+                                    <Typography variant='subtitle2' color='error' >
+                                        {validator.state === false ? validator.message : ' '}
+                                    </Typography>
+                                </Box>
+                            )}
                         </Box>
                         <Button type='submit' variant="contained" sx={{marginBottom: '8vh', width: '150px'}}>{submit._title}</Button>
                     </form>
