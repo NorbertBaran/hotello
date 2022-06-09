@@ -40,6 +40,8 @@ const SignInPage = () => {
             setOtherSubmitErrors(['Authentication failed'])
         } else {
             localStorage.setItem('jwt', jwt)
+            const customer = api.findCustomers(jwt, {email: data.email})[0]
+            localStorage.setItem('customer', customer)
             if(location.pathname === paths.sign_in)
                 navigate(paths.dashboard)
             else

@@ -38,13 +38,12 @@ const DashboardBookingListPage = () => {
     }
 
     return <Box sx={{padding: '25px 50px'}}>
-        <div>Booking list</div>
         <Booking booking={booking} customer={customer}/>
-        <BookingNew/>
+        {/*<BookingNew/>
         <Task/>
         <TaskNew/>
         <Room/>
-        <RoomNew/>
+        <RoomNew/>*/}
     </Box>
 }
 
