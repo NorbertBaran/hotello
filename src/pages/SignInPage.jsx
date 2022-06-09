@@ -1,5 +1,4 @@
-import AuthTemplate from "../components/AuthTemplate";
-import AuthFooterTypography from "../components/AuthFooterTypography";
+import {AuthTemplate, AuthFooterTypography} from "../components";
 import {useState} from "react";
 import api from "../api";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -12,7 +11,7 @@ const Footer = () => {
         {location.pathname === '/sign_in' ?
             <>
                 <AuthFooterTypography pre_label="Don't you have account yet? " link='Sign up' path='/sign_up'/>
-                <AuthFooterTypography link='Booking' path={paths.book} post_label=' without account'/>
+                <AuthFooterTypography link='Booking' path={paths.booking} post_label=' without account'/>
                 <AuthFooterTypography link='Admin' path={paths.sign_in_admin} post_label=' panel.'/>
             </> : <AuthFooterTypography pre_label="Go back to user  " link='sign in' path={paths.sign_in} post_label=' panel.'/>
         }

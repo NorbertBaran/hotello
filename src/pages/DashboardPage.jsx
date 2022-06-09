@@ -1,9 +1,9 @@
-import WelcomeLabel from "../components/WelcomeLabel";
 import {paths} from "./index";
 import {AppBar, ListItemIcon, Menu, MenuItem} from "@mui/material";
 import {useState} from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import {Logout, Settings} from "@mui/icons-material";
+import {WelcomeLabel} from "../components";
 
 const DashboardPage = () => {
     const navigate = useNavigate()

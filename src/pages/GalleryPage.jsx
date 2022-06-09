@@ -1,7 +1,6 @@
 import api from '../api'
-import {FullPageImg} from "../components";
+import {FullPageImg, WelcomeLabel} from "../components";
 import {useState} from "react";
-import WelcomeLabel from "../components/WelcomeLabel";
 import {Box, Button} from "@mui/material";
 import {ArrowBack, ArrowForward} from "@mui/icons-material";
 import {paths} from "./index";

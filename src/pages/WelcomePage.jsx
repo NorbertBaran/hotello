@@ -1,8 +1,7 @@
 import api from '../api'
 import {Box, Button, Typography} from "@mui/material";
 import {NavLink, useNavigate} from "react-router-dom";
-import {FullPageImg} from "../components";
-import WelcomeLabel from "../components/WelcomeLabel";
+import {FullPageImg, WelcomeLabel} from "../components";
 import {paths} from "./index";
 
 const WelcomePage = () => {
